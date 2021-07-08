@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row">
+{% for key, value in streamer_list.items() %}
+    <div class="col-lg-{{ col_lg_number }} col-md-6 col-sm-6">
+      <div class="card card-stats">
+          <div class="card-header card-header-success card-header-icon">
+              <div class="card-icon">
+                  <img class="material-icons" src="{{ value[2] }}" alt="streamer profile" style="width: 86px">
+              </div>
+              <p class="card-category">{{ key }}</p>
+              {% if value[1] == True %}
+                  <h3 class="card-link mt-0">
+                  <a href="https://www.mildom.com/{{ value[3] }}">配信中</a>
+                  </h3>
+                  {% else %}
+                  <h3 class="card-title">オフライン</h3>
+              {% endif %}
+          </div>
+          <div class="card-footer">
+              <div class="stats">
+                  <i class="material-icons text-gray">info</i>
+                  状態は必ずしも最新でない可能性があります。
+              </div>
+          </div>
+      </div>
+    </div>
+{% endfor %}
+</div>
+{% endblock %}

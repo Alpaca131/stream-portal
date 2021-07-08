@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row">
+<div class="card">
+    <div class="card-header card-header-rose">
+        <h4 class="card-title">辞書一覧</h4>
+        <p class="card-category">このサーバーの辞書一覧です。</p>
+    </div>
+    <div class="card-body table-responsive">
+        <div id="table1_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+            <div class="row">
+                <div id="table1_filter" class="dataTables_filter">
+                    <div class="ps-container">
+                        <button class="btn btn-primary" id="add" onclick="appendRow()">追加</button>
+                    </div>
+                    <form id="frm" name="frm" method="GET" action="">
+                        <table id="tbl"
+                           class="table table-hover table-striped table-bordered table-sm dataTable no-footer"
+                           role="grid" aria-describedby="table1_info">
+                        <thead class="text-success">
+                            <tr role="row"><th class="text-nowrap sorting_asc" tabindex="0" aria-controls="tbl" rowspan="1" colspan="1" aria-sort="ascending" aria-label="単語: 列を降順に並べ替えるにはアクティブにする" style="width: 575px;">単語</th><th class="text-nowrap sorting" tabindex="0" aria-controls="table1" rowspan="1" colspan="1" aria-label="読み: 列を昇順に並べ替えるにはアクティブにする" style="width: 650px;">読み</th><th class="text-nowrap sorting" tabindex="0" aria-controls="table1" rowspan="1" colspan="1" aria-label=": 列を昇順に並べ替えるにはアクティブにする" style="width: 136px;"></th></tr>
+                        </thead>
+                        <tbody id="tbody">
+                        <tr role="row" class="even">
+                            <td class="text-nowrap sorting_1">
+                                <label for="word1"></label>
+                                <input class="inpval" type="text" id="word1" name="word1" value="単語１" readonly style="border:none">
+                            </td>
+                            <td class="text-nowrap sorting_1">
+                                <label for="read1"></label>
+                                <input class="inpval" type="text" id="read1" name="read1" value="読み方１" readonly style="border:none">
+                            </td>
+                            <td class="text-nowrap">
+                                <input class="btn btn-twitter" type="button" id="edtBtn1" value="編集" onclick="editRow(this)">
+                                <input class="btn btn-danger" type="button" id="delBtn1" value="削除" onclick="deleteRow(this)">
+                            </td>
+                        </tr>
+                        </table>
+                    </form>
+                </div>
+            </div>
+            <div class="row"><div class="col-sm-12 col-md-5">
+                <div class="dataTables_info" id="table1_info" role="status" aria-live="polite"> 1 件中 1 から 1 まで表示</div>
+            </div>
+                <div class="col-sm-12 col-md-7">
+                    <div class="dataTables_paginate paging_simple_numbers" id="table1_paginate">
+                        <ul class="pagination">
+                            <li class="paginate_button page-item previous disabled" id="table1_previous">
+                                <a href="#" aria-controls="table1" data-dt-idx="0" tabindex="0" class="page-link">前</a>
+                            </li><li class="paginate_button page-item active">
+                            <a href="#" aria-controls="table1" data-dt-idx="1" tabindex="0" class="page-link">1</a>
+                        </li><li class="paginate_button page-item next disabled" id="table1_next">
+                            <a href="#" aria-controls="table1" data-dt-idx="2" tabindex="0" class="page-link">次</a>
+                        </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+    <script src="/static/js/edit_table.js" type="application/javascript"></script>
+{% endblock %}
