@@ -5,6 +5,7 @@ MarkupSafe
 Werkzeug
 stripe~=2.55.1
 gunicorn
-requests~=2.25.1
+requests
+mildom
 python-dotenv~=0.15.0
 sentry_sdk[flask]
