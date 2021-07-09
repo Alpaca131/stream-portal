@@ -23,8 +23,10 @@ last_updated = time.time()
 
 @app.route('/')
 def index():
+    global last_updated
     if time.time() - last_updated > 60:
         update = True
+        last_updated = time.time()
     else:
         update = False
     streamer_list = {}
