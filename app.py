@@ -98,8 +98,6 @@ def add_channels():
 
 @app.route('/settings')
 def settings():
-    session["discord_user_id"] = 539910964724891719
-    session["discord_user_name"] = "Alpaca"
     if "discord_user_id" not in session:
         return redirect(url_for("login", redirect_url=request.url))
     mildom_accounts_row = mildom_accounts_table.find_one(discord_id=session["discord_user_id"])
