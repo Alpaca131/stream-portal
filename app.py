@@ -63,7 +63,7 @@ def login():
 
 @app.route('/register-mildom-account', methods=['POST'])
 def register_mildom_account():
-    discord_id = session["discord_id"]
+    discord_id = session["discord_user_id"]
     mildom_id = request.args["mildom_id"]
     mildom_accounts_table.upsert(dict(discord_id=discord_id, mildom_id=mildom_id),
                                  ["discord_id"])
@@ -85,8 +85,8 @@ def logout():
 @app.route('/add-channels')
 def add_channels():
     if "discord_user_id" not in session:
-        return redirect(url_for("login", redirect_url=url_for("add_channels", _external=True)))
-    mildom_accounts_row = mildom_accounts_table.find_one(discord_id=session["discord_id"])
+        return redirect(url_for("login", redirect_url=request.url))
+    mildom_accounts_row = mildom_accounts_table.find_one(discord_id=session["discord_user_id"])
     if mildom_accounts_row is None:
         return redirect(url_for("settings"))
     following_list = fetch_following_list(mildom_id=mildom_accounts_row["mildom_id"])
@@ -96,8 +96,8 @@ def add_channels():
 @app.route('/settings')
 def settings():
     if "discord_user_id" not in session:
-        return redirect(url_for("login", redirect_url=url_for("settings", _external=True)))
-    mildom_accounts_row = mildom_accounts_table.find_one(discord_id=session["discord_id"])
+        return redirect(url_for("login", redirect_url=request.url))
+    mildom_accounts_row = mildom_accounts_table.find_one(discord_id=session["discord_user_id"])
     mildom_id = ""
     if mildom_accounts_row is not None:
         mildom_id = mildom_accounts_row["mildom_id"]
