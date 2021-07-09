@@ -1,10 +1,11 @@
 import json
 
+import dataset
 import mildom
 import requests
+import time
 from flask import Flask, request, render_template, redirect, session, url_for
 
-import dataset
 import settings
 
 app = Flask(__name__)
@@ -16,19 +17,21 @@ DISCORD_API_BASE_URL = 'https://discordapp.com/api/'
 CLIENT_ID = 750141462502572043
 CLIENT_SECRET = "-Ad6iC9jXG2TWJ8hDbCec-dM2HNC5DsY"
 registered_notification = []
-mildom_kun = mildom.User(10105254)
-mildom_mondo = mildom.User(10429922)
-mildom_hatsume = mildom.User(10846882)
-mildom_sova = mildom.User(10116311)
+mildom_streamer_list = [mildom.User(10105254), mildom.User(10429922), mildom.User(10846882), mildom.User(10116311)]
+last_updated = time.time()
 
 
 @app.route('/')
 def index():
-    streamer_list = {"KUN": ["mildom", mildom_kun.is_live, mildom_kun.avatar_url, 10105254],
-                     "Mondo": ["mildom", mildom_mondo.is_live, mildom_mondo.avatar_url, 10429922],
-                     "はつめ": ["mildom", mildom_hatsume.is_live, mildom_hatsume.avatar_url, 10846882],
-                     "Sovault": ["mildom", mildom_sova.is_live, mildom_sova.avatar_url, 10116311]
-                     }
+    if time.time() - last_updated > 60:
+        update = True
+    else:
+        update = False
+    streamer_list = {}
+    for i in mildom_streamer_list:
+        if update is True:
+            i.update()
+        streamer_list[i.name] = ["mildom", i.is_live, i.avatar_url, i.id]
     col_lg_number = int(12 / len(streamer_list))
     if col_lg_number < 3:
         col_lg_number = 3
