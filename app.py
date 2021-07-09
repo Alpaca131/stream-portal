@@ -84,7 +84,7 @@ def logout():
 
 @app.route('/add-channels')
 def add_channels():
-    if "user_id" not in session:
+    if "discord_user_id" not in session:
         return redirect(url_for("login", redirect_url=url_for("add_channels", _external=True)))
     mildom_accounts_row = mildom_accounts_table.find_one(discord_id=session["discord_id"])
     if mildom_accounts_row is None:
@@ -95,7 +95,7 @@ def add_channels():
 
 @app.route('/settings')
 def settings():
-    if "user_id" not in session:
+    if "discord_user_id" not in session:
         return redirect(url_for("login", redirect_url=url_for("settings", _external=True)))
     mildom_accounts_row = mildom_accounts_table.find_one(discord_id=session["discord_id"])
     mildom_id = ""

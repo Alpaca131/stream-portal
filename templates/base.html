@@ -32,7 +32,7 @@
         <a href="{{ url_for("index") }}" class="simple-text logo-mini">
           <u>Stream Portal</u>
         </a>
-          {% if "user_id" in session %}
+          {% if "discord_user_id" in session %}
               <h6 class="simple-text mt-2" style="font-size: 1rem; margin-bottom: 0">ログイン中：{{ session["user_name"] }}</h6>
               <div class="col text-center">
                 <a class="btn" href="{{ url_for('logout') }}?return_url={{ url_for("index") }}" style="background-color: lightseagreen; color: white">LOGOUT</a>
