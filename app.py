@@ -65,8 +65,9 @@ def login():
 
 @app.route('/register-mildom-account', methods=['POST'])
 def register_mildom_account():
+    form_dict = request.form
     discord_id = session["discord_user_id"]
-    mildom_id = request.form["mildom_id"]
+    mildom_id = form_dict["mildom_id"]
     mildom_accounts_table.upsert(dict(discord_id=discord_id, mildom_id=mildom_id),
                                  ["discord_id"])
     return redirect(url_for("index"))
