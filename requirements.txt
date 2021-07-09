@@ -9,3 +9,6 @@ requests
 mildom
 python-dotenv~=0.15.0
 sentry_sdk[flask]
+dataset
+sqlalchemy~=1.3.22
+psycopg2

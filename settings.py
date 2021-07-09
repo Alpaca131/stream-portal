@@ -5,3 +5,4 @@ if os.path.isfile('.env'):
     load_dotenv()
 
 SESSION_SECRET = os.environ['SESSION_SECRET']
+DB_URL = os.environ["DATABASE_URL"]

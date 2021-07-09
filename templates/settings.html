@@ -1,1 +1,27 @@
-{% extends "base.html" %}
+{% extends "dashboard.html" %}
+{% block content %}
+<div class="row">
+    <div class="col-md-10">
+      <div class="card">
+        <div class="card-header card-header-info">
+          <h4 class="card-title">Mildomアカウントとの連携</h4>
+          <p class="card-category">Complete your profile</p>
+        </div>
+        <div class="card-body">
+            <form action="{{ url_for("register_mildom_account") }}">
+                <div class="row">
+                <div class="col-md-8">
+                    <div class="form-group bmd-form-group">
+                        <label class="bmd-label-floating">MildomのIDを入力(数字のみ)</label>
+                        <input type="text" minlength="8" maxlength="8" pattern="^[0-9]+$" required class="form-control"
+                               placeholder="{{ mildom_id }}">
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-facebook pull-right">登録</button>
+            </form>
+        </div>
+      </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends "dashboard.html" %}
+{% block content %}
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-header card-header-primary">
+            <h4 class="card-title ">フォロー中</h4>
+            <p class="card-category">フォロー中の配信者一覧です。</p>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead class=" text-primary">
+                    <tr><th>
+                        名前
+                    </th><th>
+                        配信中・オフライン
+                    </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for i in following_list %}
+                    <tr>
+                        <td><img src="{{ i["avatar"] }}" alt="streamer_icon" style="height:2rem; margin-right: 1rem;">{{ i["loginname"] }}</td>
+                        <td>
+                            {% if i["anchor"]==11 %}
+                            <a href="https://www.mildom.com/{{ i["user_id"] }}">配信中</a>
+                            {% else %}
+                            オフライン
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
