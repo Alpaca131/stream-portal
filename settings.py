@@ -6,3 +6,4 @@ if os.path.isfile('.env'):
 
 SESSION_SECRET = os.environ['SESSION_SECRET']
 DB_URL = os.environ["DATABASE_URL"]
+DISCORD_CLIENT_SECRET = os.environ["DISCORD_CLIENT_SECRET"]

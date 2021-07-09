@@ -15,7 +15,7 @@ mildom_accounts_table: dataset.Table = db['mildom_accounts']
 
 DISCORD_API_BASE_URL = 'https://discordapp.com/api/'
 CLIENT_ID = 750141462502572043
-CLIENT_SECRET = "-Ad6iC9jXG2TWJ8hDbCec-dM2HNC5DsY"
+CLIENT_SECRET = settings.DISCORD_CLIENT_SECRET
 registered_notification = []
 mildom_streamer_list = [mildom.User(10105254), mildom.User(10429922), mildom.User(10846882), mildom.User(10116311)]
 last_updated = time.time()
