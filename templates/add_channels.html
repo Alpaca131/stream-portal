@@ -14,8 +14,9 @@
                         名前
                     </th><th>
                         配信中・オフライン
-                    </th>
-                    </tr>
+                    </th><th>
+                        追加
+                    </th></tr>
                     </thead>
                     <tbody>
                     {% for i in following_list %}
@@ -26,6 +27,27 @@
                             <a href="https://www.mildom.com/{{ i["user_id"] }}">配信中</a>
                             {% else %}
                             オフライン
+                            {% endif %}
+                        </td>
+                        <td class="td-actions">
+                            {% if i["user_id"]|string not in subscribing_list %}
+                            <form action="{{ url_for("add_channels") }}" method="post">
+                            <input type="hidden" name="mode" value="add">
+                            <input type="hidden" name="discord_user_id" value="{{ session["discord_user_id"] }}">
+                            <button type="submit" rel="tooltip" title="" class="btn btn-primary btn-link btn-sm"
+                                    data-original-title="チャンネルを追加" name="mildom_id" value="{{ i["user_id"] }}">
+                                <i class="material-icons">add</i>
+                            </button>
+                            </form>
+                            {% else %}
+                            <form action="{{ url_for("add_channels") }}" method="post">
+                            <input type="hidden" name="mode" value="remove">
+                            <input type="hidden" name="discord_user_id" value="{{ session["discord_user_id"] }}">
+                            <button type="submit" rel="tooltip" title="" class="btn btn-primary btn-link btn-sm"
+                                    data-original-title="チャンネルを削除" name="mildom_id" value="{{ i["user_id"] }}">
+                                <i class="material-icons">close</i>
+                            </button>
+                            </form>
                             {% endif %}
                         </td>
                     </tr>

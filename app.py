@@ -104,7 +104,7 @@ def logout():
     return redirect(return_url)
 
 
-@app.route('/add-channels')
+@app.route('/add-channels', methods=['POST', 'GET'])
 def add_channels():
     if "discord_user_id" not in session:
         return redirect(url_for("login", redirect_url=request.url))
@@ -112,7 +112,21 @@ def add_channels():
     if mildom_accounts_row is None:
         return redirect(url_for("settings"))
     following_list = fetch_following_list(mildom_id=mildom_accounts_row["mildom_id"])
-    return render_template("add_channels.html", following_list=following_list)
+    if request.method == "POST":
+        form_data = request.form
+        if int(form_data["discord_user_id"]) == session["discord_user_id"]:
+            if form_data["mode"] == "add":
+                add_mildom_channel(discord_user_id=session["discord_user_id"],
+                                   mildom_id=form_data["mildom_id"])
+            elif form_data["mode"] == "remove":
+                remove_mildom_channel(discord_user_id=session["discord_user_id"],
+                                      mildom_id=form_data["mildom_id"])
+    subscribing_list = subscribing_streamers_table.find_one(discord_user_id=session["discord_user_id"])
+    if subscribing_list is None:
+        subscribing_list = []
+    else:
+        subscribing_list = subscribing_list["mildom"]
+    return render_template("add_channels.html", following_list=following_list, subscribing_list=subscribing_list)
 
 
 @app.route('/settings')
@@ -174,6 +188,27 @@ def mildom_get_user(user_id: int):
         if time.time() - last_updated > 60:
             user.update()
     return user
+
+
+def add_mildom_channel(discord_user_id, mildom_id):
+    db_data = subscribing_streamers_table.find_one(discord_user_id=discord_user_id)
+    if db_data is None:
+        db_data = []
+    else:
+        db_data = db_data["mildom"]
+    db_data.append(str(mildom_id))
+    subscribing_streamers_table.upsert(dict(discord_user_id=discord_user_id, mildom=db_data),
+                                       ["discord_user_id"])
+    return
+
+
+def remove_mildom_channel(discord_user_id, mildom_id):
+    db_data = subscribing_streamers_table.find_one(discord_user_id=discord_user_id)
+    db_data = db_data["mildom"]
+    db_data.remove(str(mildom_id))
+    subscribing_streamers_table.update(dict(discord_user_id=discord_user_id, mildom=db_data),
+                                       ["discord_user_id"])
+    return
 
 
 if __name__ == '__main__':
