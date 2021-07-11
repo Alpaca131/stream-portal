@@ -18,20 +18,25 @@ DISCORD_API_BASE_URL = 'https://discordapp.com/api/'
 CLIENT_ID = 750141462502572043
 CLIENT_SECRET = settings.DISCORD_CLIENT_SECRET
 registered_notification = []
-mildom_default_streamer_list = [10105254, 11534859, 10846882, 10116311]
+mildom_default_streamer_list = [10105254, 10429922, 10846882, 10116311]
 mildom_api_cached_response = {}
 
 
 @app.route('/')
 def index():
     if "discord_user_id" not in session:
-        streamer_list = mildom_default_streamer_list
+        streamer_id_list = mildom_default_streamer_list
     else:
         streamer_row = subscribing_streamers_table.find_one(user_id=session["discord_user_id"])
         if streamer_row is None or streamer_row["mildom"] is None:
-            streamer_list = mildom_default_streamer_list
+            streamer_id_list = mildom_default_streamer_list
         else:
-            streamer_list = streamer_row["mildom"]
+            streamer_id_list = streamer_row["mildom"]
+    streamer_list = {}
+    for user_id in streamer_id_list:
+        user = mildom_get_user(user_id)
+        streamer_list[user.name] = \
+            ["mildom", user.is_live, user.avatar_url, user.latest_live_title, user.latest_live_thumbnail, user.viewers, user.id]
     col_lg_number = int(12 / len(streamer_list))
     if col_lg_number < 3:
         col_lg_number = 3
