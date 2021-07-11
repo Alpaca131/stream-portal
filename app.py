@@ -27,7 +27,7 @@ def index():
     if "discord_user_id" not in session:
         streamer_id_list = mildom_default_streamer_list
     else:
-        streamer_row = subscribing_streamers_table.find_one(user_id=session["discord_user_id"])
+        streamer_row = subscribing_streamers_table.find_one(discord_user_id=session["discord_user_id"])
         if streamer_row is None or streamer_row["mildom"] is None:
             streamer_id_list = mildom_default_streamer_list
         else:
