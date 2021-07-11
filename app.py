@@ -12,28 +12,26 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = settings.SESSION_SECRET
 db: dataset.Database = dataset.connect(url=settings.DB_URL)
 mildom_accounts_table: dataset.Table = db['mildom_accounts']
+subscribing_streamers_table: dataset.Table = db['subscribing_streamers']
 
 DISCORD_API_BASE_URL = 'https://discordapp.com/api/'
 CLIENT_ID = 750141462502572043
 CLIENT_SECRET = settings.DISCORD_CLIENT_SECRET
 registered_notification = []
-mildom_streamer_list = [mildom.User(10105254), mildom.User(10429922), mildom.User(10846882), mildom.User(10116311)]
-last_updated = time.time()
+mildom_default_streamer_list = [10105254, 11534859, 10846882, 10116311]
+mildom_api_cached_response = {}
 
 
 @app.route('/')
 def index():
-    global last_updated
-    if time.time() - last_updated > 60:
-        update = True
-        last_updated = time.time()
+    if "discord_user_id" not in session:
+        streamer_list = mildom_default_streamer_list
     else:
-        update = False
-    streamer_list = {}
-    for i in mildom_streamer_list:
-        if update is True:
-            i.update()
-        streamer_list[i.name] = ["mildom", i.is_live, i.avatar_url, i.id]
+        streamer_row = subscribing_streamers_table.find_one(user_id=session["discord_user_id"])
+        if streamer_row is None or streamer_row["mildom"] is None:
+            streamer_list = mildom_default_streamer_list
+        else:
+            streamer_list = streamer_row["mildom"]
     col_lg_number = int(12 / len(streamer_list))
     if col_lg_number < 3:
         col_lg_number = 3
@@ -143,6 +141,18 @@ def fetch_following_list(mildom_id: int):
     r = requests.get(url)
     r_list: list = r.json()["body"]
     return r_list
+
+
+def mildom_get_user(user_id: int):
+    if user_id not in mildom_api_cached_response:
+        user = mildom.User(user_id)
+        mildom_api_cached_response[user_id] = [user, time.time()]
+    else:
+        user: mildom.User = mildom_api_cached_response[user_id][0]
+        last_updated = mildom_api_cached_response[user_id][1]
+        if time.time() - last_updated > 60:
+            user.update()
+    return user
 
 
 if __name__ == '__main__':
