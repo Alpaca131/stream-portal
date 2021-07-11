@@ -32,16 +32,33 @@ def index():
             streamer_id_list = mildom_default_streamer_list
         else:
             streamer_id_list = streamer_row["mildom"]
-    streamer_list = {}
+    online_streamer_list = {}
+    offline_streamer_list = {}
     for user_id in streamer_id_list:
         user = mildom_get_user(int(user_id))
-        streamer_list[user.name] = \
-            ["mildom", user.is_live, user.avatar_url, user.latest_live_title,
-             user.latest_live_thumbnail, user.viewers, user.id]
-    col_lg_number = int(12 / len(streamer_list))
-    if col_lg_number < 3:
-        col_lg_number = 3
-    return render_template("home.html", streamer_list=streamer_list, col_lg_number=col_lg_number)
+        if user.is_live:
+            online_streamer_list[user.name] = \
+                ["mildom", user.avatar_url, user.latest_live_title,
+                 user.latest_live_thumbnail, user.viewers, user.id]
+        else:
+            offline_streamer_list[user.name] = \
+                ["mildom", user.avatar_url, user.latest_live_title,
+                 user.latest_live_thumbnail, user.viewers, user.id]
+    try:
+        online_col_lg_number = int(12 / len(online_streamer_list))
+    except ZeroDivisionError:
+        online_col_lg_number = 3
+    try:
+        offline_col_lg_number = int(12 / len(offline_streamer_list))
+    except ZeroDivisionError:
+        offline_col_lg_number = 3
+    if online_col_lg_number < 3:
+        online_col_lg_number = 3
+    if offline_col_lg_number < 3:
+        offline_col_lg_number = 3
+    return render_template("home.html",
+                           online_streamer_list=online_streamer_list, online_col_lg_number=online_col_lg_number,
+                           offline_streamer_list=offline_streamer_list, offline_col_lg_number=offline_col_lg_number)
 
 
 @app.route('/login')
