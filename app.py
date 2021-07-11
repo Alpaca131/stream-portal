@@ -44,17 +44,15 @@ def index():
             offline_streamer_list[user.name] = \
                 ["mildom", user.avatar_url, user.latest_live_title,
                  user.latest_live_thumbnail, user.viewers, user.id]
-    try:
-        online_col_lg_number = int(12 / len(online_streamer_list))
-    except ZeroDivisionError:
-        online_col_lg_number = 3
-    try:
-        offline_col_lg_number = int(12 / len(offline_streamer_list))
-    except ZeroDivisionError:
-        offline_col_lg_number = 3
-    if online_col_lg_number < 3:
-        online_col_lg_number = 3
-    if offline_col_lg_number < 3:
+    offline_col_lg_number = 0
+    online_col_lg_number = 0
+    if len(online_streamer_list) <= 3:
+        online_col_lg_number = 4
+    if len(online_streamer_list) >= 4:
+        online_streamer_list = 3
+    if len(offline_streamer_list) <= 3:
+        offline_col_lg_number = 4
+    if len(offline_streamer_list) >= 4:
         offline_col_lg_number = 3
     return render_template("home.html",
                            online_streamer_list=online_streamer_list, online_col_lg_number=online_col_lg_number,
