@@ -36,7 +36,8 @@ def index():
     for user_id in streamer_id_list:
         user = mildom_get_user(int(user_id))
         streamer_list[user.name] = \
-            ["mildom", user.is_live, user.avatar_url, user.latest_live_title, user.latest_live_thumbnail, user.viewers, user.id]
+            ["mildom", user.is_live, user.avatar_url, user.latest_live_title,
+             user.latest_live_thumbnail, user.viewers, user.id]
     col_lg_number = int(12 / len(streamer_list))
     if col_lg_number < 3:
         col_lg_number = 3
