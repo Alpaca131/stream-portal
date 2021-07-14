@@ -187,6 +187,7 @@ def mildom_get_user(user_id: int):
         last_updated = mildom_api_cached_response[user_id][1]
         if time.time() - last_updated > 60:
             user.update()
+            mildom_api_cached_response[user_id] = [user, time.time()]
     return user
 
 
