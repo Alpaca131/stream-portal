@@ -1,0 +1,16 @@
+{
+  "name": "Streamer Portal",
+  "short_name": "St-portal",
+  "theme_color": "#77a1ff",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "scope": "/",
+  "start_url": "/home",
+  "icons": [
+        {
+            "src": "static/img/image.jpg",
+            "sizes": "541x541",
+            "type": "image/jpg"
+        }
+    ]
+}
