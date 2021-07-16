@@ -1,7 +1,8 @@
 {
   "name": "Streamer Portal",
-  "short_name": "StPortal",
+  "short_name": "StreamerPortal",
   "theme_color": "#77a1ff",
+  "orientation": "portrait-primary",
   "background_color": "#ffffff",
   "display": "standalone",
   "scope": "/",

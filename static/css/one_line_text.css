@@ -1,0 +1,14 @@
+.one-line-text {
+    //fontサイズ
+    font-size:1rem;
+
+    //改行の禁止
+    white-space:nowrap;
+
+    //はみ出した部分を隠す
+    overflow:hidden;
+
+    //テキストのはみ出しを「…」で省略
+    text-overflow:ellipsis;
+
+}

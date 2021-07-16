@@ -22,6 +22,11 @@ mildom_default_streamer_list = [10105254, 10429922, 10846882, 10116311]
 mildom_api_cached_response = {}
 
 
+@app.route('/debug')
+def debug():
+    return render_template("player.html")
+
+
 @app.route('/')
 def index():
     if "discord_user_id" not in session:

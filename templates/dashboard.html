@@ -25,6 +25,7 @@ The above copyright notice and this permission notice shall be included in all c
   <!--     Fonts and icons     -->
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="/static/css/one_line_text.css">
   <!-- Material Kit CSS -->
   <link href="/static/css/material-dashboard.css?v=2.1.2" rel="stylesheet" />
   <link rel="icon" href="/static/img/favicon.webp">
@@ -263,19 +264,19 @@ The above copyright notice and this permission notice shall be included in all c
   <script>
     $(document).ready(function() {
       $().ready(function() {
-        $sidebar = $('.sidebar');
+          const $sidebar = $('.sidebar');
 
-        $sidebar_img_container = $sidebar.find('.sidebar-background');
+          const $sidebar_img_container = $sidebar.find('.sidebar-background');
 
-        $full_page = $('.full-page');
+          const $full_page = $('.full-page');
 
-        $sidebar_responsive = $('body > .navbar-collapse');
+          const $sidebar_responsive = $('body > .navbar-collapse');
 
-        window_width = $(window).width();
+          const window_width = $(window).width();
 
-        fixed_plugin_open = $('.sidebar .sidebar-wrapper .nav li.active a p').html();
+          const fixed_plugin_open = $('.sidebar .sidebar-wrapper .nav li.active a p').html();
 
-        if (window_width > 767 && fixed_plugin_open == 'Dashboard') {
+          if (window_width > 767 && fixed_plugin_open === 'Dashboard') {
           if ($('.fixed-plugin .dropdown').hasClass('show-dropdown')) {
             $('.fixed-plugin .dropdown').addClass('open');
           }
@@ -294,22 +295,22 @@ The above copyright notice and this permission notice shall be included in all c
         });
 
         $('.fixed-plugin .active-color span').click(function() {
-          $full_page_background = $('.full-page-background');
+            const $full_page_background = $('.full-page-background');
 
-          $(this).siblings().removeClass('active');
+            $(this).siblings().removeClass('active');
           $(this).addClass('active');
 
-          var new_color = $(this).data('color');
+            const new_color = $(this).data('color');
 
-          if ($sidebar.length != 0) {
+            if ($sidebar.length !== 0) {
             $sidebar.attr('data-color', new_color);
           }
 
-          if ($full_page.length != 0) {
+          if ($full_page.length !== 0) {
             $full_page.attr('filter-color', new_color);
           }
 
-          if ($sidebar_responsive.length != 0) {
+          if ($sidebar_responsive.length !== 0) {
             $sidebar_responsive.attr('data-color', new_color);
           }
         });
@@ -318,24 +319,24 @@ The above copyright notice and this permission notice shall be included in all c
           $(this).siblings().removeClass('active');
           $(this).addClass('active');
 
-          var new_color = $(this).data('background-color');
+            const new_color = $(this).data('background-color');
 
-          if ($sidebar.length != 0) {
+            if ($sidebar.length !== 0) {
             $sidebar.attr('data-background-color', new_color);
           }
         });
 
         $('.fixed-plugin .img-holder').click(function() {
             let new_image_full_page;
-            $full_page_background = $('.full-page-background');
+            const $full_page_background = $('.full-page-background');
 
-          $(this).parent('li').siblings().removeClass('active');
+            $(this).parent('li').siblings().removeClass('active');
           $(this).parent('li').addClass('active');
 
 
             let new_image = $(this).find("img").attr('src');
 
-            if ($sidebar_img_container.length != 0 && $('.switch-sidebar-image input:checked').length != 0) {
+            if ($sidebar_img_container.length != 0 && $('.switch-sidebar-image input:checked').length !== 0) {
             $sidebar_img_container.fadeOut('fast', function() {
               $sidebar_img_container.css('background-image', 'url("' + new_image + '")');
               $sidebar_img_container.fadeIn('fast');
@@ -351,7 +352,7 @@ The above copyright notice and this permission notice shall be included in all c
             });
           }
 
-          if ($('.switch-sidebar-image input:checked').length == 0) {
+          if ($('.switch-sidebar-image input:checked').length === 0) {
               new_image = $('.fixed-plugin li.active .img-holder').find("img").attr('src');
               new_image_full_page = $('.fixed-plugin li.active .img-holder').find('img').data('src');
 
@@ -359,13 +360,13 @@ The above copyright notice and this permission notice shall be included in all c
             $full_page_background.css('background-image', 'url("' + new_image_full_page + '")');
           }
 
-          if ($sidebar_responsive.length != 0) {
+          if ($sidebar_responsive.length !== 0) {
             $sidebar_responsive.css('background-image', 'url("' + new_image + '")');
           }
         });
 
         $('.switch-sidebar-image input').change(function() {
-          $full_page_background = $('.full-page-background');
+            const $full_page_background = $('.full-page-background');
 
             const $input = $(this);
 
@@ -420,11 +421,11 @@ The above copyright notice and this permission notice shall be included in all c
           }
 
           // we simulate the window Resize so the charts will get updated in realtime.
-          var simulateWindowResize = setInterval(function() {
-            window.dispatchEvent(new Event('resize'));
-          }, 180);
+            const simulateWindowResize = setInterval(function () {
+                window.dispatchEvent(new Event('resize'));
+            }, 180);
 
-          // we stop the simulation of Window Resize after the animations are completed
+            // we stop the simulation of Window Resize after the animations are completed
           setTimeout(function() {
             clearInterval(simulateWindowResize);
           }, 1000);
@@ -440,7 +441,7 @@ The above copyright notice and this permission notice shall be included in all c
     });
     // service workerの登録関係
     if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/static/sw.js').then(function(registration) {
+    navigator.serviceWorker.register('/static/js/sw.js').then(function(registration) {
         console.log('ServiceWorker registration successful with scope: ', registration.scope);
     }).catch(function(err) {
         console.log('ServiceWorker registration failed: ', err);

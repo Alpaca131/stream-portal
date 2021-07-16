@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8" />
+        <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+        <title>hlsjs</title>
+    </head>
+    <body>
+    <a href="vlc-x-callback://x-callback-url/stream?url=https://d3ooprpqd2179o.cloudfront.net/vod/jp/10203132/10203132-c3o38ddaks9df3rvk5lg/origin/raw/10203132-c3o38ddaks9df3rvk5lg_raw.m3u8"
+    >launch VLC</a>
+        <video id="video_smaple" controls></video>
+        <script>
+            if(Hls.isSupported()) {
+            var video = document.getElementById('video_smaple'); //videoタグと同じIDにする
+            var hls = new Hls();
+            hls.loadSource('https://d3ooprpqd2179o.cloudfront.net/vod/jp/10203132/10203132-c3o38ddaks9df3rvk5lg/origin/raw/10203132-c3o38ddaks9df3rvk5lg_raw.m3u8'); //ここで.m3u8ファイルを指定
+            hls.attachMedia(video);
+             }
+        </script>
+    </body>
+</html>
