@@ -40,21 +40,25 @@ def index():
     online_streamer_list = {}
     offline_streamer_list = {}
     for user_id in streamer_id_list:
-        user = mildom_get_user(int(user_id))
-        if user.is_live:
-            online_streamer_list[user.name] = \
-                ["mildom", user.avatar_url, user.latest_live_title,
-                 user.latest_live_thumbnail, user.viewers, user.id]
+        live_stream = mildom_get_live(int(user_id))
+        if live_stream.is_live:
+            if live_stream.is_dvr_enabled:
+                m3u8_url = live_stream.dvr_videos[-1]["url"]
+            else:
+                m3u8_url = None
+            online_streamer_list[live_stream.author_name] = \
+                ["mildom", live_stream.author_avatar_url, live_stream.title,
+                 live_stream.thumbnail_url, live_stream.viewers, live_stream.author_id, m3u8_url]
         else:
-            offline_streamer_list[user.name] = \
-                ["mildom", user.avatar_url, user.latest_live_title,
-                 user.latest_live_thumbnail, user.viewers, user.id]
+            offline_streamer_list[live_stream.author_name] = \
+                ["mildom", live_stream.author_avatar_url, live_stream.title,
+                 live_stream.thumbnail_url, live_stream.viewers, live_stream.author_id]
     offline_col_lg_number = 0
     online_col_lg_number = 0
     if len(online_streamer_list) <= 3:
         online_col_lg_number = 4
     if len(online_streamer_list) >= 4:
-        online_streamer_list = 3
+        online_col_lg_number = 3
     if len(offline_streamer_list) <= 3:
         offline_col_lg_number = 4
     if len(offline_streamer_list) >= 4:
@@ -183,17 +187,17 @@ def fetch_following_list(mildom_id: int):
     return r_list
 
 
-def mildom_get_user(user_id: int):
+def mildom_get_live(user_id: int):
     if user_id not in mildom_api_cached_response:
-        user = mildom.User(user_id)
-        mildom_api_cached_response[user_id] = [user, time.time()]
+        live_stream = mildom.LiveStream(user_id)
+        mildom_api_cached_response[user_id] = [live_stream, time.time()]
     else:
-        user: mildom.User = mildom_api_cached_response[user_id][0]
+        live_stream: mildom.LiveStream = mildom_api_cached_response[user_id][0]
         last_updated = mildom_api_cached_response[user_id][1]
         if time.time() - last_updated > 60:
-            user.update()
-            mildom_api_cached_response[user_id] = [user, time.time()]
-    return user
+            live_stream.update()
+            mildom_api_cached_response[user_id] = [live_stream, time.time()]
+    return live_stream
 
 
 def add_mildom_channel(discord_user_id, mildom_id):

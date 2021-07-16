@@ -2,34 +2,41 @@
 {% block content %}
     <h2 class="header-title">配信中のチャンネル</h2>
     <div class="row">
-    {% for key, value in online_streamer_list.items() %}
-        <div class="col-lg-{{ online_col_lg_number }} col-md-6 col-sm-6">
-          <div class="card card-stats">
-              <div class="card-header card-header-icon card-header-success">
-                  <div class="card-icon">
-                      {% if value[3]==None %}
-                      <img class="material-icons" src="https://www.mildom.com/assets/share_cover.png" alt="streamer profile" style="width: 86px">
-                      {% else %}
-                      <img class="material-icons" src="{{ value[3] }}" alt="streamer profile" style="width: 86px">
+    {% if online_streamer_list|length != 0 %}
+        {% for key, value in online_streamer_list.items() %}
+            <div class="col-lg-{{ online_col_lg_number }} col-md-6 col-sm-6">
+              <div class="card card-stats">
+                  <div class="card-header card-header-icon card-header-success">
+                      <div class="card-icon">
+                          {% if value[3]==None %}
+                          <img class="material-icons" src="https://www.mildom.com/assets/share_cover.png" alt="streamer profile" style="width: 86px">
+                          {% else %}
+                          <img class="material-icons" src="{{ value[3] }}" alt="streamer profile" style="width: 86px">
+                          {% endif %}
+                      </div>
+                      <p class="card-category" style="margin-bottom: 0">{{ key }}<br>
+                      🔴{{ value[4] }}
+                      </p>
+                      <h3 class="card-link mb-0 mt-0">
+                      <a href="https://www.mildom.com/{{ value[5] }}"
+                         style="font-size: 1rem; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">{{ value[2] }}</a>
+                      {% if value[6] != None %}
+                          <a href="vlc://{{ value[6] }}" style="font-size: 0.7rem;">VLC</a>
                       {% endif %}
+                      </h3>
                   </div>
-                  <p class="card-category" style="margin-bottom: 0">{{ key }}<br>
-                  🔴{{ value[4] }}
-                  </p>
-                  <h3 class="card-link mb-0 mt-0">
-                  <a href="https://www.mildom.com/{{ value[5] }}"
-                     style="font-size: 1rem; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">{{ value[2] }}</a>
-                  </h3>
-              </div>
-              <div class="card-footer">
-                  <div class="stats">
-                      <i class="material-icons text-gray">info</i>
-                      状態は必ずしも最新でない可能性があります。
+                  <div class="card-footer">
+                      <div class="stats">
+                          <i class="material-icons text-gray">info</i>
+                          状態は必ずしも最新でない可能性があります。
+                      </div>
                   </div>
               </div>
-          </div>
-        </div>
-    {% endfor %}
+            </div>
+        {% endfor %}
+    {% else %}
+    <p class="col-md-6 col-sm-6">なし</p>
+    {% endif %}
     </div>
     <h2 class="header-title">オフラインのチャンネル</h2>
     <div class="row">
