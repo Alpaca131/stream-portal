@@ -24,7 +24,7 @@ mildom_api_cached_response = {}
 
 @app.route('/debug')
 def debug():
-    return render_template("player.html")
+    return "success"
 
 
 @app.route('/')
@@ -222,4 +222,4 @@ def remove_mildom_channel(discord_user_id, mildom_id):
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(threaded=True)
