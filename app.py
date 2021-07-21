@@ -1,4 +1,5 @@
 import json
+from crypt import methods
 
 import dataset
 import mildom
@@ -22,7 +23,7 @@ mildom_default_streamer_list = [10105254, 10429922, 10846882, 10116311]
 mildom_api_cached_response = {}
 
 
-@app.route('/debug')
+@app.route('/debug', methods=["POST", "GET"])
 def debug():
     return "success"
 
