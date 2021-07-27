@@ -26,12 +26,12 @@ mildom_api_cached_response = {}
 
 @app.route('/debug', methods=["POST", "GET"])
 def debug():
-    return render_template("test.html")
+    return "success"
 
 
-@app.route('/debug2')
+@app.route('/debug4')
 def debug2():
-    return render_template("test2.html")
+    return render_template("test.html")
 
 
 @app.route('/')
