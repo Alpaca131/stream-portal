@@ -5,6 +5,8 @@ import dataset
 import mildom
 import requests
 import time
+
+from aiohttp.web_routedef import route
 from flask import Flask, request, render_template, redirect, session, url_for
 
 import settings
@@ -25,7 +27,12 @@ mildom_api_cached_response = {}
 
 @app.route('/debug', methods=["POST", "GET"])
 def debug():
-    return "success"
+    return render_template("test.html")
+
+
+@app.route('/debug2')
+def debug2():
+    return render_template("test.html")
 
 
 @app.route('/')
