@@ -29,7 +29,7 @@ def debug():
     return "success"
 
 
-@app.route('/debug5')
+@app.route('/debug6')
 def debug2():
     return render_template("test.html")
 
