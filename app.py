@@ -6,7 +6,6 @@ import mildom
 import requests
 import time
 
-from aiohttp.web_routedef import route
 from flask import Flask, request, render_template, redirect, session, url_for
 
 import settings
@@ -32,7 +31,7 @@ def debug():
 
 @app.route('/debug2')
 def debug2():
-    return render_template("test.html")
+    return render_template("test2.html")
 
 
 @app.route('/')
