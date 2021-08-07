@@ -175,7 +175,7 @@ def neo_miyako_auth():
         session['state'] = state
         return redirect('https://discord.com/api/oauth2/authorize?client_id=718034684533145605&redirect_uri=https%3A'
                         '%2F%2Fstream-portal.herokuapp.com%2Fneo-miyako-auth%2F2fa&response_type=code&scope=identify'
-                        f'&state={state}&prompt=none')
+                        f'&state={state}')
     if session["state"] != request.args.get("state"):
         return "Authorization failed.", 401
     res_token = exchange_code(code=code, redirect_url=url_for("neo_miyako_auth", _external=True),
