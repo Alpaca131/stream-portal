@@ -167,7 +167,7 @@ def notification_register():
     return "success"
 
 
-@app.route('/new-miyako-auth/2fa')
+@app.route('/neo-miyako-auth/2fa')
 def neo_miyako_auth():
     code = request.args.get("code")
     if code is None:
