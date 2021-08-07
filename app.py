@@ -182,12 +182,16 @@ def neo_miyako_auth():
                               client_id=718034684533145605, client_secret=FIVE_DON_BOT_SECRET, scope="identify")
     token = res_token['access_token']
     res_info = requests.get(DISCORD_API_BASE_URL + 'users/@me', headers={'Authorization': f'Bearer {token}'})
-    res_dict = json.loads(res_info.content.decode())
+    res_dict = res_info.json()
     if res_dict["mfa_enabled"] is False:
         return "二段階認証を有効にしてから再度お試しください。"
     user_id = int(res_dict['id'])
+    r = requests.get(DISCORD_API_BASE_URL + f"/guilds/484102468524048395/members/{user_id}")
+    r_dict = r.json()
+    roles: list = r_dict["roles"]
+    roles.append(873017896983482379)
     requests.patch(DISCORD_API_BASE_URL + f"/guilds/484102468524048395/members/{user_id}",
-                   json={"roles": [873017896983482379]}, headers={"authorization": f"Bot {FIVE_DON_BOT_TOKEN}"})
+                   json={"roles": roles}, headers={"authorization": f"Bot {FIVE_DON_BOT_TOKEN}"})
     return "正常に付与されました。"
 
 
