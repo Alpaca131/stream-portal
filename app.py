@@ -7,7 +7,6 @@ import mildom
 import requests
 import time
 
-from aiohttp.web_routedef import route
 from flask import Flask, request, render_template, redirect, session, url_for
 
 import settings
