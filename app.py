@@ -7,6 +7,7 @@ import mildom
 import requests
 import time
 
+from aiohttp.web_routedef import route
 from flask import Flask, request, render_template, redirect, session, url_for
 
 import settings
@@ -168,13 +169,18 @@ def notification_register():
 
 
 @app.route('/neo-miyako-auth/2fa')
+def neo_miyako_auth_redirect():
+    return redirect(url_for("neo_miyako_auth"))
+
+
+@app.route('/neo-miyako/2fa-auth')
 def neo_miyako_auth():
     code = request.args.get("code")
     if code is None:
         state = random_strings(n=19)
         session['state'] = state
         return redirect('https://discord.com/api/oauth2/authorize?client_id=718034684533145605&redirect_uri=https%3A'
-                        '%2F%2Fstream-portal.herokuapp.com%2Fneo-miyako-auth%2F2fa&response_type=code&scope=identify'
+                        '%2F%2Fstream-portal.herokuapp.com%2Fneo-miyako%2F2fa-auth&response_type=code&scope=identify '
                         f'&state={state}')
     if session["state"] != request.args.get("state"):
         return "Authorization failed.", 401
